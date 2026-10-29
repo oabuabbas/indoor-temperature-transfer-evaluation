@@ -1,0 +1,27 @@
+{
+  "status": "post_result_exploratory",
+  "homes": 73,
+  "correlations": {
+    "selector_minus_local": {
+      "history_sd": -0.07691595705294337,
+      "history_change": 0.1606503764038011
+    },
+    "source_minus_local": {
+      "history_sd": -0.12122053560409726,
+      "history_change": 0.12569418733802296
+    }
+  },
+  "benchmark_equal_home_mae": {
+    "boosting_3": 0.9224177252042588,
+    "boosting_9": 0.911356835219413,
+    "persistence": 1.1637318713169098,
+    "ridge_3": 0.8723733844519114,
+    "ridge_9": 0.8547289729662083,
+    "svr_9": 0.8687896721072085
+  },
+  "benchmark_homes": 73,
+  "benchmark_home_months": 471,
+  "benchmark_test_rows": 189147,
+  "primary_unchanged": true,
+  "protocol_sha256": "82dfd2bb8f6e7cef9961786d5a23dbef7b2bbc81f7dc07260ef8d5dc2d93a55f"
+}

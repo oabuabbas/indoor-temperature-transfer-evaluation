@@ -1,0 +1,27 @@
+# Locked local IDEAL holdout evaluation v1
+
+Written after all IDEAL development results and data-quality audits but **before computing any holdout forecast errors**. This is a local protocol, not publicly timestamped preregistration, not external climate validation, and not a guarantee of statistical independence across houses. IDEAL source/validation design and decisions were informed by earlier exploratory results; report those facts.
+
+## Research question and primary comparison
+
+At a 6-hour horizon in IDEAL held-out homes, does the fixed past-30-day selector reduce equally weighted per-home MAE relative to a fixed locally fitted 30-day ridge? Primary contrast is selector MAE minus local-ridge MAE in °C; report the signed mean, relative difference calculated from equal-home means, median and home-level wins/ties/losses. A negative contrast favors the selector. No hypothesis-test significance or universal superiority claim will be made. Other methods are secondary comparators, not candidates for retrospective primary redefinition.
+
+## House and sensor selection
+
+Use exactly `holdout` IDs from `ideal_house_split.json`; do not change the split. Select one original room-temperature sensor per house using the same development eligibility: successful 10–45°C raw quality audit, coverage_eligible, position flag 0, no recorded timestamp reversal, valid metadata joins and named raw member. Sort room type priority livingroom, kitchenliving, bedroom, then other, breaking ties ascending sensor ID. This selection uses whole-record coverage, making eligibility retrospective, not a simulation of initial installation. Report the original 74 home IDs, eligible selected count, and counts contributing test results. Do not revise candidate or thresholds based on test errors.
+
+Use 10–45°C, 25 valid distinct readings per ten-minute slot, at least four slots per hour and equal weights for their means; no interpolation. Timestamps are UTC, hourly measurements are available only after the input hour ends; temperature samples outside the range are excluded before slot averaging, not deemed faulty. Preserve missing hourly bins. Same raw aggregation as development. A home with missing common history/test rows is ineligible for that month for **all** methods.
+
+## Source training and test windows
+
+Use the previously fixed development source homes only from `ideal_development_sensors_v1.csv`; never source-train on holdout homes or on development-validation homes. Train the 6-hour daily residual ridge on source rows with target-hour start before 2017-09-01 00:00 UTC, with at least 24 rows per source home, source-weighted by rows, same three features and penalty 100. Use already prepared development hourly files; verify source homes and actual source row count. Source cutoff predates all holdout issue windows.
+
+Fixed holdout issue windows are months from 2017-10-01 through 2018-06-01, with end equal to the next month or 2018-06-30 00:00 UTC, whichever comes first. At each monthly start, prior 30-day history has issue >= start-30 days and target-hour start < start. Test issue-hour start >= start and target-hour start < end. These rules mean the final target hourly bucket is complete by boundary and no future target enters history. Require at least 24 history and 24 common test rows for each house-month. Calculate forecasts on the same rows for persistence, previous day, transferred source ridge, locally fitted ridge (penalty 100), locally fitted HistGradientBoostingRegressor (learning_rate=.05, max_iter=70, max_leaf_nodes=7, min_samples_leaf=20, l2_regularization=10, early_stopping=False, random_state=42), and rolling selector. Local models fit history only. Selector chooses minimum history MAE among persistence, prior day, and frozen source ridge (tie order as listed) and remains fixed for the month; local models are not selector candidates. Both selector and local models need historical target labels, so they are not zero-shot. No parameter tuning on holdout data.
+
+## Metrics and uncertainty
+
+Within each eligible home pool absolute test errors over its eligible months; use equal weight per home in aggregate. Record home-month counts, histories, sample counts, first/last eligible month, model choices, source homes/rows and model library versions. Primary = difference in equal-home mean MAE of selector vs local ridge. Secondary report other equal-home MAEs, descriptive per-home comparisons and per-month eligibility; do not compare metrics to development when row support differs.
+
+As a descriptive robustness interval conditional on this clustered study, resample the contributing home-level paired MAE differences with replacement 5,000 times using NumPy RNG seed 20261028 and report the 2.5th and 97.5th percentiles. This is **not** an inferential confidence interval for sites or climate zones: weather and time shocks are shared, homes were not sampled randomly from a defined population, and selection and missingness are retrospective. No p-value or causal significance claim. No climate, control, energy-saving or comfort claims.
+
+Do not alter protocol after seeing results; if an implementation defect or absent data prevents execution, correct and disclose what failed and whether outcome values were observed. Afterward record all planned and unplanned analysis separately. A subsequent 15–40°C sensitivity, if run, is secondary and must use separately specified paired-time rules; it must not alter the primary comparison.

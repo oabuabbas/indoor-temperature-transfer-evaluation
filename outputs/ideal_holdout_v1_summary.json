@@ -1,0 +1,37 @@
+{
+  "protocol_sha256": "088b302b6ffd2fc273bc6610ba6942dc3a89eeee6e38ff1e8679f2060d4ac4a5",
+  "original_holdout_homes": 74,
+  "selected_homes": 73,
+  "contributing_homes": 73,
+  "eligible_home_months": 477,
+  "excluded_home_months": 180,
+  "source_homes": 55,
+  "source_rows": 125779,
+  "mean_mae_c": {
+    "daily_seasonal": 0.9614813457278504,
+    "local_histgb_30d": 0.9086016253213108,
+    "local_ridge_30d": 0.8558567124587024,
+    "persistence": 1.1691849799921514,
+    "rolling_selector": 0.8462798887244035,
+    "source_daily_ridge": 0.8503455206247187
+  },
+  "primary_selector_minus_local_c": -0.009576823734298974,
+  "primary_percent_relative_to_local": -1.1189751268979016,
+  "primary_median_difference_c": -0.002921615511921105,
+  "selector_better_homes": 38,
+  "ties": 0,
+  "selector_worse_homes": 35,
+  "descriptive_home_resample_interval_c": [
+    -0.023244640047518986,
+    0.0023769755060981295
+  ],
+  "bootstrap_draws": 5000,
+  "bootstrap_seed": 20261028,
+  "interval_scope": "Descriptive home reweighting within one clustered region; not a population or site confidence interval.",
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scikit_learn": "1.9.1"
+  }
+}

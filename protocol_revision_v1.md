@@ -1,0 +1,9 @@
+# Post-result revision analysis v1
+
+Specified after the primary and previous secondary outcomes were inspected. Not preregistered or confirmatory. Preserve all primary outputs.
+
+Heterogeneity: reconstruct eligible original home-month histories; calculate prior-history temperature SD and mean absolute one-hour change from the matched history rows. Average these characteristics equally over each home's eligible months. Associate with home-level selector-minus-local MAE using descriptive Spearman rank correlation; no p values or causal interpretation. Also contrast fixed source minus local ridge. Report all specified characteristics. Plot monthly paired differences with changing cohort counts; no weather or HVAC causal claims.
+
+Feature/model sensitivity: extend temperature lags from [0,1,18] to [0,1,18,2,3,6,12,24,48]. Complete-case shared history and test support across all five local models; same original monthly windows, 24 history/test minimum, no interpolation. Compare ridge penalty 100 with 3/9 features; histogram boosting with 3/9 features using original settings; RBF SVR with 9 features (C=1, epsilon=0.1, gamma=scale), scaling fitted on training history only. Each predicts the residual over prior-day target-aligned temperature. No parameter search or test-directed selection. Include persistence on identical test rows. Report equal-home MAE, eligible windows and rows, not comparisons against original unequal-support aggregates. This is a limited nonlinear and lag-ablation benchmark, not a deep-learning or state-of-the-art study. Do not alter primary model or selector after inspecting this analysis.
+
+Save hashes of original scores and hourly input files; verify unchanged primary files. No public release of raw household records or home-level tables in this revision package until data conditions are reviewed.
